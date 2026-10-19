@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC N CHEESE - Creamy, Cheesy, Happy!</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* === COLOR PALETTE & GLOBAL VARIABLES === */
+        :root {
+            --cheese-yellow: #FFC107;
+            --cheese-orange: #FF8C00;
+            --dark-accent: #1A1A1A;
+            --light-bg: #FFFDF9;
+            --white: #FFFFFF;
+            --gray-light: #F4F4F4;
+            --gray-text: #666666;
+            --whatsapp-green: #25D366;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-accent);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* === NOTIFICATION TOAST === */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--dark-accent);
+            color: var(--cheese-yellow);
+            text-align: center;
+            border-radius: 30px;
+            padding: 14px 24px;
+            position: fixed;
+            z-index: 2000;
+            bottom: 30px;
+            right: 30px;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 40px;
+        }
+
+        /* === HEADER & NAVIGATION === */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--cheese-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--cheese-yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--cheese-orange);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon-btn {
+            position: relative;
+            background: var(--gray-light);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--dark-accent);
+            transition: var(--transition);
+        }
+
+        .cart-icon-btn:hover {
+            background: var(--cheese-yellow);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--cheese-orange);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cheese-yellow), var(--cheese-orange));
+            color: var(--white);
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--dark-accent);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: #333333;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 8%;
+            max-width: 1300px;
+            margin: 0 auto;
+            min-height: 80vh;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--dark-accent);
+            margin-bottom: 10px;
+        }
+
+        .hero-title span {
+            color: var(--cheese-orange);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cheese-orange);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--gray-text);
+            margin-bottom: 30px;
+            max-width: 540px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            transform: rotate(-2deg);
+            transition: var(--transition);
+        }
+
+        .hero-image img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* === SECTION COMMON === */
+        section {
+            padding: 80px 8%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-accent);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--cheese-orange);
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--gray-text);
+            font-size: 1rem;
+        }
+
+        /* === TENTANG PRODUK === */
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-img {
+            flex: 1;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+            height: 320px;
+        }
+
+        .about-text {
+            flex: 1.2;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--cheese-orange);
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            color: var(--gray-text);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .about-badge {
+            display: inline-block;
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--dark-accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* === MENU & HARGA === */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .menu-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .menu-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .menu-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .menu-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--cheese-orange);
+            margin-bottom: 12px;
+        }
+
+        .menu-desc {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .menu-options {
+            margin-bottom: 15px;
+        }
+
+        .menu-options label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .menu-options select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .qty-btn {
+            background: var(--gray-light);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            background: var(--cheese-yellow);
+        }
+
+        .qty-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            background: transparent;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: var(--cheese-yellow);
+            color: var(--dark-accent);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--cheese-orange);
+            color: var(--white);
+        }
+
+        /* === KERANJANG BELANJA & PEMESANAN === */
+        .cart-section {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .cart-table th, .cart-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .cart-table th {
+            background: var(--gray-light);
+            font-weight: 700;
+        }
+
+        .remove-btn {
+            color: #dc3545;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .checkout-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px stroke var(--gray-light);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .summary-box {
+            background: var(--gray-light);
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #ccc;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--cheese-orange);
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .payment-option {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .payment-option.active {
+            border-color: var(--cheese-orange);
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--cheese-orange);
+        }
+
+        .wa-btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-wa {
+            background-color: var(--whatsapp-green);
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-wa:hover {
+            background-color: #1ebc57;
+            transform: translateY(-2px);
+        }
+
+        .btn-print {
+            background-color: var(--dark-accent);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .btn-print:hover {
+            background-color: #333;
+        }
+
+        /* === KEUNGGULAN PRODUK === */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--cheese-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px auto;
+        }
+
+        .feature-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--gray-text);
+        }
+
+        /* === CARA PESAN === */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .step-card {
+            background: var(--white);
+            padding: 25px 15px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--cheese-orange);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+        }
+
+        .step-card p {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--dark-accent);
+            color: var(--white);
+            padding: 60px 8% 20px 8%;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h2 {
+            color: var(--cheese-yellow);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--cheese-yellow);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--cheese-yellow);
+        }
+
+        .footer-contact p {
+            color: #ccc;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--cheese-orange);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        /* === RECEIPT PRINT STYLE (STYLESHEET KHUSUS CETAK RESI) === */
+        #printable-receipt {
+            display: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-receipt, #printable-receipt * {
+                visibility: visible;
+            }
+            #printable-receipt {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                font-family: monospace;
+                color: #000;
+                background: #fff;
+            }
+            .receipt-header {
+                text-align: center;
+                border-bottom: 2px dashed #000;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+            }
+            .receipt-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 15px;
+            }
+            .receipt-table th, .receipt-table td {
+                text-align: left;
+                padding: 5px 0;
+            }
+            .receipt-total {
+                border-top: 2px dashed #000;
+                padding-top: 10px;
+                text-align: right;
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
+            .receipt-footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .hero-description {
+                margin: 0 auto 30px auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .about-container {
+                flex-direction: column;
+            }
+            .checkout-box {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                gap: 15px;
+                font-size: 0.85rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .tagline {
+                font-size: 1.2rem;
+            }
+            .cart-table {
+                font-size: 0.85rem;
+            }
+            .cart-table th, .cart-table td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast">Produk berhasil ditambahkan ke keranjang!</div>
+
+    <!-- 1. HEADER & NAVBAR -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-cheese"></i> MAC N CHEESE
+            </a>
+            <ul class="nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#tentang">Tentang Produk</a></li>
+                <li><a href="#menu">Menu & Harga</a></li>
+                <li><a href="#keunggulan">Keunggulan</a></li>
+                <li><a href="#cara-pesan">Cara Pesan</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+            <div class="header-actions">
+                <button class="cart-icon-btn" onclick="scrollToCart()" title="Lihat Keranjang">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+                <a href="#menu" class="btn-primary">Pesan Sekarang</a>
+                <button onclick="printReceipt()" class="btn-secondary" title="Cetak Bukti Pesanan">
+                    <i class="fa-solid fa-print"></i> Cetak Bukti
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="beranda">
+        <div class="hero-content">
+            <h1 class="hero-title">MAC N <span>CHEESE</span></h1>
+            <div class="tagline">“Creamy, Cheesy, Happy!”</div>
+            <p class="hero-description">
+                Mac and Cheese lezat dengan perpaduan pasta makaroni dan saus keju creamy yang gurih di tambah toping sosis setiap gigitan. Makanan kekinian pas di kantong mahasiswa!
+            </p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn-primary"><i class="fa-solid fa-utensils"></i> Pilih Menu</a>
+                <a href="#cara-pesan" class="btn-secondary"><i class="fa-solid fa-circle-info"></i> Panduan Pesan</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=800&q=80" alt="Mac and Cheese Delicious">
+        </div>
+    </section>
+
+    <!-- 2. TENTANG PRODUK -->
+    <section id="tentang">
+        <div class="section-header">
+            <h2 class="section-title">Tentang Produk</h2>
+            <p class="section-subtitle">Kenapa Mac N Cheese kami sangat istimewa?</p>
+        </div>
+        <div class="about-container">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1621996346565-e3d5d6281288?auto=format&fit=crop&w=800&q=80" alt="Detail Mac and Cheese">
+            </div>
+            <div class="about-text">
+                <span class="about-badge">Favorites Students & Foodies</span>
+                <h3>Keju Melimpah, Sensasi Luar Biasa!</h3>
+                <p>
+                    <strong>Mac and Cheese</strong> adalah makanan berbahan dasar pasta makaroni yang dipadukan dengan saus keju creamy sehingga menghasilkan rasa gurih, lezat, dan nikmat. Ditambah topping sosis lezat & taburan keju melimpah di atasnya!
+                </p>
+                <p>
+                    Produk ini sangat cocok sebagai camilan mengenyangkan maupun makanan praktis bagi mahasiswa dan masyarakat umum yang ingin menikmati hidangan lezat kelas kafe dengan harga yang sangat terjangkau.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. MENU & HARGA -->
+    <section id="menu">
+        <div class="section-header">
+            <h2 class="section-title">Menu & Harga</h2>
+            <p class="section-subtitle">Pilih varian favoritmu dan masukkan ke keranjang!</p>
+        </div>
+
+        <div class="menu-grid">
+            <!-- Varian 1 -->
+            <div class="menu-card">
+                <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=600&q=80" alt="Mac N Cheese Original" class="menu-img">
+                <div class="menu-content">
+                    <h3 class="menu-title">Mac N Cheese Original</h3>
+                    <div class="menu-price">Rp 10.000</div>
+                    <p class="menu-desc">Makaroni lembut dipadukan saus keju kental super creamy dan gurih di setiap suapan.</p>
+                    
+                    <div class="menu-options">
+                        <label for="size-1">Pilih Ukuran:</label>
+                        <select id="size-1">
+                            <option value="Reguler (Medium)">Reguler (Medium)</option>
+                            <option value="Jumbo (+Rp 3.000)">Jumbo (+Rp 3.000)</option>
+                        </select>
+                    </div>
+
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="changeQty('qty-1', -1)">-</button>
+                        <input type="text" id="qty-1" value="1" class="qty-input" readonly>
+                        <button class="qty-btn" onclick="changeQty('qty-1', 1)">+</button>
+                    </div>
+
+                    <button class="add-to-cart-btn" onclick="addToCart('Mac N Cheese Original', 10000, 'size-1', 'qty-1')">
+                        <i class="fa-solid fa-cart-plus"></i> Tambah ke Keranjang
+                    </button>
+                </div>
+            </div>
+
+            <!-- Varian 2 -->
+            <div class="menu-card">
+                <img src="https://images.unsplash.com/photo-1555949258-eb67b280806b?auto=format&fit=crop&w=600&q=80" alt="Mac N Cheese Sosis" class="menu-img">
+                <div class="menu-content">
+                    <h3 class="menu-title">Mac N Cheese + Sosis</h3>
+                    <div class="menu-price">Rp 12.000</div>
+                    <p class="menu-desc">Mac and Cheese creamy dengan ekstra potongan sosis ayam/sapi yang gurih dan nikmat.</p>
+                    
+                    <div class="menu-options">
+                        <label for="size-2">Pilih Ukuran:</label>
+                        <select id="size-2">
+                            <option value="Reguler (Medium)">Reguler (Medium)</option>
+                            <option value="Jumbo (+Rp 3.000)">Jumbo (+Rp 3.000)</option>
+                        </select>
+                    </div>
+
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="changeQty('qty-2', -1)">-</button>
+                        <input type="text" id="qty-2" value="1" class="qty-input" readonly>
+                        <button class="qty-btn" onclick="changeQty('qty-2', 1)">+</button>
+                    </div>
+
+                    <button class="add-to-cart-btn" onclick="addToCart('Mac N Cheese + Sosis', 12000, 'size-2', 'qty-2')">
+                        <i class="fa-solid fa-cart-plus"></i> Tambah ke Keranjang
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KERANJANG BELANJA INTERAKTIF -->
+        <div class="cart-section" id="cart-section">
+            <h3 style="margin-bottom: 20px; font-size: 1.5rem;"><i class="fa-solid fa-basket-shopping"></i> Keranjang Belanja Anda</h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Produk</th>
+                            <th>Ukuran</th>
+                            <th>Harga</th>
+                            <th>Jumlah</th>
+                            <th>Subtotal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: #888;">Keranjang belanja masih kosong. Silakan pilih menu di atas!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FORM CHECKOUT & METODE PEMBAYARAN -->
+            <div class="checkout-box">
+                <div>
+                    <h4 style="margin-bottom: 15px;">Data Pembeli & Pengiriman</h4>
+                    <div class="form-group">
+                        <label for="buyer-name">Nama Lengkap:</label>
+                        <input type="text" id="buyer-name" placeholder="Masukkan nama Anda">
+                    </div>
+                    <div class="form-group">
+                        <label for="buyer-address">Alamat / Lokasi Pengambilan (Misal: Gedung C Kampus):</label>
+                        <textarea id="buyer-address" rows="3" placeholder="Masukkan alamat lengkap atau detail lokasi kampus"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Pilih Metode Pembayaran:</label>
+                        <div class="payment-options">
+                            <div class="payment-option active" id="pay-cod" onclick="selectPayment('COD (Bayar di Tempat)')">
+                                <i class="fa-solid fa-hand-holding-dollar"></i> COD (Cash)
+                            </div>
+                            <div class="payment-option" id="pay-tf" onclick="selectPayment('Transfer Bank / E-Wallet')">
+                                <i class="fa-solid fa-building-columns"></i> Transfer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h4 style="margin-bottom: 15px;">Ringkasan Pembayaran</h4>
+                    <div class="summary-row">
+                        <span>Total Item:</span>
+                        <span id="summary-qty">0 Porsi</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Metode Pembayaran:</span>
+                        <span id="summary-method">COD (Bayar di Tempat)</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total Harga:</span>
+                        <span id="summary-total-price">Rp 0</span>
+                    </div>
+
+                    <!-- TOMBOL KANAN UNTUK ORDER WHATSAPP -->
+                    <div class="wa-btn-container">
+                        <label style="font-size: 0.85rem; font-weight: 600;">Pilih Penjual Tujuan WhatsApp:</label>
+                        <button onclick="checkoutWA('082337775870')" class="btn-wa">
+                            <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp (Ica - 082337775870)
+                        </button>
+                        <button onclick="checkoutWA('083195167377')" class="btn-wa" style="background-color: #128C7E;">
+                            <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp (Indah - 083195167377)
+                        </button>
+                        <button onclick="printReceipt()" class="btn-print">
+                            <i class="fa-solid fa-print"></i> Cetak Bukti Pesanan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. KEUNGGULAN PRODUK -->
+    <section id="keunggulan" style="background: rgba(255,193,7,0.05); border-radius: 30px;">
+        <div class="section-header">
+            <h2 class="section-title">Keunggulan Produk</h2>
+            <p class="section-subtitle">Alasan mengapa kamu wajib coba Mac N Cheese ini!</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h4>Rasa Lezat</h4>
+                <p>Perpaduan makaroni dan saus keju creamy yang gurih bikin nagih di setiap gigitan.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
+                <h4>Harga Terjangkau</h4>
+                <p>Sangat pas untuk kantong mahasiswa dan pelajar tanpa menguras dompet.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-box-open"></i></div>
+                <h4>Praktis</h4>
+                <p>Mudah dinikmati kapan saja dan di mana saja sebagai makanan utama atau camilan.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-store"></i></div>
+                <h4>Bahan Mudah Diperoleh</h4>
+                <p>Sangat berpotensi dikembangkan menjadi peluang usaha mahasiswa yang menjanjikan.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h4>Peluang Bisnis Menarik</h4>
+                <p>Dapat dipasarkan secara fleksibel melalui media sosial dan layanan pesan antar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CARA PESAN -->
+    <section id="cara-pesan">
+        <div class="section-header">
+            <h2 class="section-title">Cara Pesan</h2>
+            <p class="section-subtitle">Langkah mudah untuk menikmati porsi lezatmu</p>
+        </div>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <p>Pilih ukuran Mac and Cheese</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <p>Tentukan jumlah pesanan</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <p>Tambahkan produk ke keranjang</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <p>Pilih metode COD / Transfer</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <p>Periksa ringkasan & total harga</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">6</div>
+                <p>Klik tombol "Pesan via WhatsApp"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FOOTER -->
+    <footer id="kontak">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2><i class="fa-solid fa-cheese"></i> MAC N CHEESE</h2>
+                <p>“Creamy Cheese, Happy Moments!”</p>
+                <p>Hadir sebagai pilihan makanan lezat, praktis, dan terjangkau untuk mahasiswa serta masyarakat umum.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigasi Cepat</h4>
+                <ul>
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#tentang">Tentang Produk</a></li>
+                    <li><a href="#menu">Menu & Harga</a></li>
+                    <li><a href="#keunggulan">Keunggulan</a></li>
+                    <li><a href="#cara-pesan">Cara Pesan</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Informasi Pemesanan</h4>
+                <p><i class="fa-brands fa-whatsapp"></i> Ica: 082337775870</p>
+                <p><i class="fa-brands fa-whatsapp"></i> Indah: 083195167377</p>
+                <p><i class="fa-solid fa-location-dot"></i> Area Kampus & Pesan Antar</p>
+                <div class="social-icons">
+                    <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Mac N Cheese. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- STRUCTURAL RECEIPT TEMPLATE (FOR PRINTING) -->
+    <div id="printable-receipt">
+        <div class="receipt-header">
+            <h2>MAC N CHEESE</h2>
+            <p>"Creamy, Cheesy, Happy!"</p>
+            <p>Bukti Pesanan Pelanggan</p>
+        </div>
+        <p><strong>Tanggal:</strong> <span id="r-date"></span></p>
+        <p><strong>Nama Pembeli:</strong> <span id="r-name">-</span></p>
+        <p><strong>Alamat/Lokasi:</strong> <span id="r-address">-</span></p>
+        <p><strong>Metode Pembayaran:</strong> <span id="r-payment">COD</span></p>
+        <hr style="margin: 10px 0; border: none; border-top: 1px dashed #000;">
+        
+        <table class="receipt-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Ukuran</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="r-items">
+            </tbody>
+        </table>
+
+        <div class="receipt-total">
+            TOTAL PEMBAYARAN: <span id="r-total">Rp 0</span>
+        </div>
+        <div class="receipt-footer">
+            <p>Terima kasih telah memesan Mac N Cheese!</p>
+            <p>Simpan bukti ini atau bagikan ke WhatsApp/Sosmed Penjual.</p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT / LOGIC FITUR -->
+    <script>
+        // State Keranjang Belanja
+        let cart = [];
+        let selectedPaymentMethod = "COD (Bayar di Tempat)";
+
+        // Fungsi Tambah / Kurang Jumlah di Kartu Produk
+        function changeQty(id, change) {
+            const input = document.getElementById(id);
+            let val = parseInt(input.value) + change;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // Fungsi Tambah Produk Ke Keranjang
+        function addToCart(name, basePrice, sizeSelectId, qtyInputId) {
+            const sizeSelect = document.getElementById(sizeSelectId);
+            const selectedSize = sizeSelect.value;
+            const qty = parseInt(document.getElementById(qtyInputId).value);
+
+            let price = basePrice;
+            if (selectedSize.includes("Jumbo")) {
+                price += 3000;
+            }
+
+            // Cek apakah item serupa sudah ada
+            const existingIndex = cart.findIndex(item => item.name === name && item.size === selectedSize);
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += qty;
+                cart[existingIndex].subtotal = cart[existingIndex].qty * cart[existingIndex].price;
+            } else {
+                cart.push({
+                    name: name,
+                    size: selectedSize,
+                    price: price,
+                    qty: qty,
+                    subtotal: price * qty
+                });
+            }
+
+            updateCartUI();
+            showToast(`${name} berhasil ditambahkan!`);
+        }
+
+        // Update Tampilan Tabel Keranjang & Total
+        function updateCartUI() {
+            const tbody = document.getElementById("cart-items");
+            const cartCount = document.getElementById("cart-count");
+            const summaryQty = document.getElementById("summary-qty");
+            const summaryTotalPrice = document.getElementById("summary-total-price");
+
+            tbody.innerHTML = "";
+
+            if (cart.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #888;">Keranjang belanja masih kosong. Silakan pilih menu di atas!</td></tr>`;
+                cartCount.innerText = "0";
+                summaryQty.innerText = "0 Porsi";
+                summaryTotalPrice.innerText = "Rp 0";
+                return;
+            }
+
+            let totalQty = 0;
+            let totalPrice = 0;
+
+            cart.forEach((item, index) => {
+                totalQty += item.qty;
+                totalPrice += item.subtotal;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td><strong>${item.name}</strong></td>
+                    <td>${item.size}</td>
+                    <td>Rp ${item.price.toLocaleString('id-ID')}</td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <button class="qty-btn" onclick="updateItemQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="updateItemQty(${index}, 1)">+</button>
+                        </div>
+                    </td>
+                    <td>Rp ${item.subtotal.toLocaleString('id-ID')}</td>
+                    <td>
+                        <button class="remove-btn" onclick="removeItem(${index})" title="Hapus">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            cartCount.innerText = totalQty;
+            summaryQty.innerText = `${totalQty} Porsi`;
+            summaryTotalPrice.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        }
+
+        // Ubah Qty di Keranjang
+        function updateItemQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            } else {
+                cart[index].subtotal = cart[index].qty * cart[index].price;
+            }
+            updateCartUI();
+        }
+
+        // Hapus Item
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            showToast("Produk dihapus dari keranjang.");
+        }
+
+        // Pilih Pembayaran
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            document.getElementById("summary-method").innerText = method;
+
+            document.getElementById("pay-cod").classList.remove("active");
+            document.getElementById("pay-tf").classList.remove("active");
+
+            if (method.includes("COD")) {
+                document.getElementById("pay-cod").classList.add("active");
+            } else {
+                document.getElementById("pay-tf").classList.add("active");
+            }
+        }
+
+        // Scroll Halus Ke Keranjang
+        function scrollToCart() {
+            document.getElementById("cart-section").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Integrasi Pesan Via Whatsapp
+        function checkoutWA(phone) {
+            if (cart.length === 0) {
+                alert("Keranjang belanja Anda masih kosong! Silakan tambah menu terlebih dahulu.");
+                return;
+            }
+
+            const name = document.getElementById("buyer-name").value.trim();
+            const address = document.getElementById("buyer-address").value.trim();
+
+            if (!name) {
+                alert("Mohon isi Nama Lengkap Anda terlebih dahulu.");
+                document.getElementById("buyer-name").focus();
+                return;
+            }
+
+            let text = `*HALO MAC N CHEESE, SAYA MAU PESAN!* 🧀\n\n`;
+            text += `*Nama Pembeli:* ${name}\n`;
+            text += `*Alamat/Lokasi:* ${address ? address : '-'}\n`;
+            text += `*Metode Pembayaran:* ${selectedPaymentMethod}\n\n`;
+            text += `*--- DETAIL PESANAN ---*\n`;
+
+            let totalPrice = 0;
+            cart.forEach((item, index) => {
+                text += `${index + 1}. ${item.name} (${item.size})\n   Jumlah: ${item.qty} porsi x Rp ${item.price.toLocaleString('id-ID')} = Rp ${item.subtotal.toLocaleString('id-ID')}\n`;
+                totalPrice += item.subtotal;
+            });
+
+            text += `\n*TOTAL PEMBAYARAN:* Rp ${totalPrice.toLocaleString('id-ID')}\n\n`;
+            text += `Mohon segera diproses ya, terima kasih!`;
+
+            const encodedText = encodeURIComponent(text);
+            const waUrl = `https://wa.me/62${phone.substring(1)}?text=${encodedText}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // Cetak Resi / Bukti Pesanan
+        function printReceipt() {
+            if (cart.length === 0) {
+                alert("Tidak ada pesanan di keranjang untuk dicetak bukti resi.");
+                return;
+            }
+
+            const name = document.getElementById("buyer-name").value.trim() || "Pelanggan";
+            const address = document.getElementById("buyer-address").value.trim() || "-";
+
+            document.getElementById("r-date").innerText = new Date().toLocaleString('id-ID');
+            document.getElementById("r-name").innerText = name;
+            document.getElementById("r-address").innerText = address;
+            document.getElementById("r-payment").innerText = selectedPaymentMethod;
+
+            const rItems = document.getElementById("r-items");
+            rItems.innerHTML = "";
+
+            let totalPrice = 0;
+            cart.forEach(item => {
+                totalPrice += item.subtotal;
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.size}</td>
+                    <td>${item.qty}</td>
+                    <td>Rp ${item.subtotal.toLocaleString('id-ID')}</td>
+                `;
+                rItems.appendChild(tr);
+            });
+
+            document.getElementById("r-total").innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+
+            window.print();
+        }
+    </script>
+</body>
+</html>
