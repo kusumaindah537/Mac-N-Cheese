@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC N CHEESE — Creamy, Cheesy, Happy!</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cheese: {
+                            yellow: '#F59E0B',
+                            orange: '#EA580C',
+                            light: '#FEF3C7',
+                            dark: '#1F2937',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.85) 0%, rgba(234, 88, 12, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Custom Print Style untuk Resi */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-receipt, #printable-receipt * {
+                visibility: visible;
+            }
+            #printable-receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+                color: black;
+                padding: 20px;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-amber-50/30 text-gray-800 antialiased selection:bg-amber-400 selection:text-black">
+
+    <!-- NOTIFIKASI TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 border-l-4 border-amber-500">
+        <i class="fa-solid fa-circle-check text-amber-400 text-xl"></i>
+        <span id="toast-msg" class="text-sm font-medium">Produk ditambahkan ke keranjang!</span>
+    </div>
+
+    <!-- NAVBAR HEADER -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-amber-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white text-xl font-bold shadow-md transform group-hover:scale-105 transition-all">
+                        <i class="fa-solid fa-cheese"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight text-gray-900">MAC N <span class="text-orange-600">CHEESE</span></span>
+                        <p class="text-[10px] text-amber-600 font-bold -mt-1 tracking-wider uppercase">Creamy, Cheesy, Happy!</p>
+                    </div>
+                </a>
+
+                <!-- Nav Desktop -->
+                <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-700">
+                    <a href="#beranda" class="hover:text-orange-600 transition-colors">Beranda</a>
+                    <a href="#tentang" class="hover:text-orange-600 transition-colors">Tentang Produk</a>
+                    <a href="#menu" class="hover:text-orange-600 transition-colors">Menu & Harga</a>
+                    <a href="#keunggulan" class="hover:text-orange-600 transition-colors">Keunggulan</a>
+                    <a href="#cara-pesan" class="hover:text-orange-600 transition-colors">Cara Pesan</a>
+                    <a href="#kontak" class="hover:text-orange-600 transition-colors">Kontak</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <!-- Cart Button Icon -->
+                    <button onclick="toggleCartModal()" class="relative p-2.5 text-gray-700 hover:text-orange-600 hover:bg-amber-50 rounded-full transition-all">
+                        <i class="fa-solid fa-shopping-bag text-xl"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-orange-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
+                    </button>
+
+                    <!-- Cetak Bukti Pesanan -->
+                    <button onclick="openReceiptModal()" class="hidden sm:flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold px-3.5 py-2.5 rounded-xl border border-gray-300 transition-all">
+                        <i class="fa-
